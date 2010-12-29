@@ -1,0 +1,35 @@
+<%= form_for(@article) do |f| %>
+  <% if @article.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@article.errors.count, "error") %> prohibited this article from being saved:</h2>
+
+      <ul>
+      <% @article.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_field :content %>
+  </div>
+  <h3>Tags</h3>
+  <table>
+	<% Tag.all.each do |tag| %>
+	<tr>
+		<td><%= f.label tag.name %><br /></td>
+		<td><%= check_box :p , tag.name,:valeur_on=>tag.id, :valeur_off=>0 %></td>
+	</tr>
+  <% end %>
+  </table>
+  <br />
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
