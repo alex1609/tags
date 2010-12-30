@@ -20,18 +20,18 @@ class ArticlesController < ApplicationController
 		end
 	end
 	@a.each do |x|
-	  Equiv.all.each do |e|
-	    if x[0]==e.tag_id1 && x[1]!=e.tag_id2
-	      @c << [e.tag_id2,x[1],0]
+	  Equivalence.all.each do |e|
+	    if x[0]==Tag.where(:name=>e.tag1).first.id && x[1]!=Tag.where(:name=>e.tag2).first.id
+	      @c << [Tag.where(:name=>e.tag2).first.id,x[1],0]
 	    end
-	    if x[0]==e.tag_id2 && x[1]!=e.tag_id1
-	      @c << [e.tag_id1,x[1],0]
+	    if x[0]==Tag.where(:name=>e.tag2).first.id && x[1]!=Tag.where(:name=>e.tag1).first.id
+	      @c << [Tag.where(:name=>e.tag1).first.id,x[1],0]
 	    end
-	    if x[1]==e.tag_id1 && x[0]!=e.tag_id2
-	      @c << [x[0],e.tag_id2,0]
+	    if x[1]==Tag.where(:name=>e.tag1).first.id && x[0]!=Tag.where(:name=>e.tag2).first.id
+	      @c << [x[0],Tag.where(:name=>e.tag2).first.id,0]
 	    end
-	    if x[1]==e.tag_id2 && x[0]!=e.tag_id1
-	      @c << [x[0],e.tag_id1,0]
+	    if x[1]==Tag.where(:name=>e.tag2).first.id && x[0]!=Tag.where(:name=>e.tag1).first.id
+	      @c << [x[0],Tag.where(:name=>e.tag1).first.id,0]
 	    end
 	  end
 	end

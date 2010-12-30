@@ -44,12 +44,6 @@ class EquivalencesController < ApplicationController
 
     respond_to do |format|
       if @equivalence.save
-        @e = Equiv.new
-        @e.tag_id1 = Tag.where(:name=>@equivalence.tag1).first.id
-        @e.tag_id2 = Tag.where(:name=>@equivalence.tag2).first.id
-        @e.save
-        
-        
         format.html { redirect_to(@equivalence, :notice => 'Equivalence was successfully created.') }
         format.xml  { render :xml => @equivalence, :status => :created, :location => @equivalence }
       else
