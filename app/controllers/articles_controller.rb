@@ -7,14 +7,36 @@ class ArticlesController < ApplicationController
   def maj_links
   	@a = []
 	@b = []
+	@c = []
 	Article.all.each do |article|
 		article.tags.all.each do |tag1|
 			article.tags.all.each do |tag2|
-				if tag1 != tag2
+			  Equivalence.all.each do |equ|
+				if (tag1 != tag2) && ((tag1!=equ.tag1 && tag1!=equ.tag2) || (tag2!=equ.tag1 && tag2!=equ.tag2))
 					@a << [tag1.id,tag2.id,0]
 				end
+			  end
 			end
 		end
+	end
+	@a.each do |x|
+	  Equiv.all.each do |e|
+	    if x[0]==e.tag_id1 && x[1]!=e.tag_id2
+	      @c << [e.tag_id2,x[1],0]
+	    end
+	    if x[0]==e.tag_id2 && x[1]!=e.tag_id1
+	      @c << [e.tag_id1,x[1],0]
+	    end
+	    if x[1]==e.tag_id1 && x[0]!=e.tag_id2
+	      @c << [x[0],e.tag_id2,0]
+	    end
+	    if x[1]==e.tag_id2 && x[0]!=e.tag_id1
+	      @c << [x[0],e.tag_id1,0]
+	    end
+	  end
+	end
+	@c.each do |x|
+	  @a << x
 	end
 	@a.each do |x|
 		@b << [x[0],x[1],@a.count(x)]
