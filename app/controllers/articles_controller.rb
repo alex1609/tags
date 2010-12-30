@@ -37,6 +37,7 @@ class ArticlesController < ApplicationController
 	end
 	@c.each do |x|
 	  @a << x
+	  @c.delete(x)
 	end
 	@a.each do |x|
 		@b << [x[0],x[1],@a.count(x)]
